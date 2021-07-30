@@ -4,7 +4,7 @@
     "module": "commonjs",
     "lib": ["es6"],        
     "allowJs": true,  
-    "outDir": "./code_base_deploy",   
+    "outDir": "dist",
     "rootDir": "./src",  
     "removeComments": true,
     "strict": true,
@@ -18,14 +18,8 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@controllers/*": [".src/controllers/*"],
-      "@models/*": [".src/models/*"]
-
-    }
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
   ]
 }
