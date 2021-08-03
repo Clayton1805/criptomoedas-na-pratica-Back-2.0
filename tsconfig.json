@@ -9,8 +9,7 @@
     "removeComments": true,
     "strict": true,
     "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
+      "./node_modules/@types"
     ],
     "esModuleInterop": true,
     "resolveJsonModule": true,
@@ -20,6 +19,7 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/config/index.js"
   ]
 }
