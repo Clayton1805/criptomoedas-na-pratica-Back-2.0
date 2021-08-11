@@ -1,10 +1,13 @@
 import { Router } from 'express';
 
 import { Article } from '../models/repositories';
+import { articleService } from '../services/articleService';
+import { articlePostValidator } from '../validations/articleValidator';
+import { validate } from '../validations/validate';
 
 const articleRouter = Router();
 
-articleRouter.post('/', () => {});
+articleRouter.post('/', validate(articlePostValidator), articleService.create);
 
 articleRouter.get('/', async (_req, res) => {
   try {

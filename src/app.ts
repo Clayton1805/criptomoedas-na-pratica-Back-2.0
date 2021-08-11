@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import { MONGODB_URL } from './config';
 import routes from './routes';
 import log from './utils/log';
+import { INTERNAL_SERVER_ERROR } from './utils/allStatusCode';
 
 class App {
   public express: express.Application
@@ -45,7 +46,7 @@ class App {
     // eslint-disable-next-line no-unused-vars
     const middlewareError: ErrorRequestHandler = (err, _req, res, _next) => {
       console.error({ err });
-      res.status(500).json({ erro: 'erro interno' });
+      res.status(INTERNAL_SERVER_ERROR).json({ errorMessage: 'internal error' });
     };
 
     this.express.use(middlewareError);

@@ -8,20 +8,15 @@ export interface IArticle extends Document {
     text?: string,
     urlImg?: string,
   },
-  articleContent: [
-    {
-      contentType: string,
-      content: {
-        htmlJsonDraftJs?: {
-          blocks: [
-            {
-              text: string,
-            },
-          ],
+  content: {
+    htmlJsonDraftJs?: {
+      blocks: [
+        {
+          text: string,
         },
-      },
+      ],
     },
-  ],
+  },
   like?: string[],
   dislike?: string[],
 }
