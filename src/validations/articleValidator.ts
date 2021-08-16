@@ -1,25 +1,33 @@
 import { body } from 'express-validator';
 import { CRIPTO_NAMES } from '../config';
+import { isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
 
-export const articlePostValidator = [
+export const articlePostValidators = [
   body('criptoName')
     .notEmpty()
-    .withMessage('precisa ser preenchido.')
+    .withMessage(notEmptyMessage)
     .bail()
     .isString()
-    .withMessage('tem que ser uma string.')
+    .withMessage(isStringMessage)
     .bail()
     .custom((criptoName) => {
       if ((CRIPTO_NAMES as Array<String>).some((coin) => criptoName === coin)) {
         return Promise.resolve();
       }
-      return Promise.reject('essa moeda não é valida.');
+      return Promise.reject('Essa moeda não é valida.');
     }),
-  // body('teacherId')
-  //   .if(body('teacherId').notEmpty()),
-  // body('studentsId')
+  // body('title')
   //   .notEmpty()
-  //   .withMessage('precisa ser preenchido.'),
+  //   .withMessage(notEmptyMessage)
+  //   .bail()
+  //   .isString()
+  //   .withMessage(isStringMessage),
+  body('sinopse.text')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isString()
+    .withMessage(isStringMessage),
   // body('studentsId.*')
   //   .isString()
   //   .withMessage('tem que ser uma string.')
