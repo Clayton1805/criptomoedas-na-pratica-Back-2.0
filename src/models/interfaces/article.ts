@@ -9,12 +9,13 @@ export interface IArticle extends Document {
     urlImg?: string,
   },
   content: {
-    htmlJsonDraftJs?: {
+    htmlJsonDraftJs: {
       blocks: [
         {
           text: string,
         },
       ],
+      entityMap: object,
     },
   },
   like?: string[],

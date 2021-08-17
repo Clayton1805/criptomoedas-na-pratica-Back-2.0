@@ -12,7 +12,7 @@ const articleSchema = new Schema({
     htmlJsonDraftJs: {
       blocks: [
         {
-          text: { type: String },
+          text: { type: String, required: true },
         },
       ],
     },

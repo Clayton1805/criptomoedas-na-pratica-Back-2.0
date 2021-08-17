@@ -10,7 +10,7 @@ const articleRouter = Router();
 
 articleRouter.post('/',
   // validateAuthorization(tokenValidator),
-  validate(articlePostValidators, true),
+  validate(articlePostValidators),
   articleService.create);
 
 articleRouter.get('/', async (_req, res) => {

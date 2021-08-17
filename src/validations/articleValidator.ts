@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 import { CRIPTO_NAMES } from '../config';
-import { isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
+import { isObjectMessage, isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
 
 export const articlePostValidators = [
   body('criptoName')
@@ -16,23 +16,30 @@ export const articlePostValidators = [
       }
       return Promise.reject('Essa moeda não é valida.');
     }),
-  // body('title')
-  //   .notEmpty()
-  //   .withMessage(notEmptyMessage)
-  //   .bail()
-  //   .isString()
-  //   .withMessage(isStringMessage),
-  body('sinopse.text')
+  body('title')
     .notEmpty()
     .withMessage(notEmptyMessage)
     .bail()
     .isString()
     .withMessage(isStringMessage),
-  // body('studentsId.*')
-  //   .isString()
-  //   .withMessage('tem que ser uma string.')
-  //   .bail()
-  //   .isLength({ min: 4 })
-  //   .withMessage('precisa ter 24 caracteres.'),
-
+  body('sinopse.text')
+    .optional({ nullable: true })
+    .isString()
+    .withMessage(isStringMessage),
+  body('sinopse.urlImg')
+    .optional({ nullable: true })
+    .isString()
+    .withMessage(isStringMessage),
+  body('content.htmlJsonDraftJs.entityMap')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isObject()
+    .withMessage(isObjectMessage),
+  body('content.htmlJsonDraftJs.blocks')
+    .notEmpty()
+    .withMessage(notEmptyMessage),
+  body('content.htmlJsonDraftJs.blocks.*.text')
+    .isString()
+    .withMessage(isStringMessage),
 ];
