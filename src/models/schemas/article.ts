@@ -1,30 +1,26 @@
 import { Schema } from 'mongoose';
+import { IArticle } from '../interfaces/article';
 
-const articleSchema = new Schema({
+const articleSchema = new Schema<IArticle>({
   criptoName: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, required: true },
+  user: { type: Schema.Types.ObjectId, required: true, default: 'useraleatoio' },
   title: { type: String, required: true },
   sinopse: {
-    text: { type: String },
-    urlImg: { type: String },
+    text: String,
+    urlImg: String,
   },
   content: {
-    htmlJsonDraftJs: {
-      blocks: [
-        {
-          text: { type: String, required: true },
-        },
-      ],
-    },
+    html: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
   },
   like: [{ type: Schema.Types.ObjectId }],
   dislike: [{ type: Schema.Types.ObjectId }],
-}, { timestamps: true });
+});
 
 articleSchema.index({
   title: 'text',
   'sinopse.text': 'text',
-  'content.htmlJsonDraftJs.blocks.text': 'text',
 });
 
 export default articleSchema;

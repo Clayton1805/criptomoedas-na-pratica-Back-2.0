@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 import { CRIPTO_NAMES } from '../config';
-import { isObjectMessage, isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
+import { isMatchesHtml, isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
 
 export const articlePostValidators = [
   body('criptoName')
@@ -24,22 +24,25 @@ export const articlePostValidators = [
     .withMessage(isStringMessage),
   body('sinopse.text')
     .optional({ nullable: true })
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
     .isString()
     .withMessage(isStringMessage),
   body('sinopse.urlImg')
     .optional({ nullable: true })
-    .isString()
-    .withMessage(isStringMessage),
-  body('content.htmlJsonDraftJs.entityMap')
     .notEmpty()
     .withMessage(notEmptyMessage)
     .bail()
-    .isObject()
-    .withMessage(isObjectMessage),
-  body('content.htmlJsonDraftJs.blocks')
-    .notEmpty()
-    .withMessage(notEmptyMessage),
-  body('content.htmlJsonDraftJs.blocks.*.text')
     .isString()
     .withMessage(isStringMessage),
+  body('content.html')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isString()
+    .withMessage(isStringMessage)
+    .bail()
+    .matches(/<\/?[a-z][\s\S]*>/i)
+    .withMessage(isMatchesHtml),
 ];

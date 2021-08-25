@@ -9,14 +9,9 @@ export interface IArticle extends Document {
     urlImg?: string,
   },
   content: {
-    htmlJsonDraftJs: {
-      blocks: [
-        {
-          text: string,
-        },
-      ],
-      entityMap: object,
-    },
+    html: string,
+    createdAt: Date,
+    updatedAt: Date,
   },
   like?: string[],
   dislike?: string[],
