@@ -1,8 +1,8 @@
 import { Router } from 'express';
+import rescue from 'express-rescue';
 
-import { Article } from '../models/repositories';
 import { articleService } from '../services/articleService';
-import { articlePostValidators } from '../validations/articleValidator';
+import { articlePostValidators, articleSearchValidators } from '../validations/articleValidator';
 // import { tokenValidator } from '../validations/authorizationValidator';
 import { validate } from '../validations/validate';
 
@@ -11,17 +11,25 @@ const articleRouter = Router();
 articleRouter.post('/',
   // validateAuthorization(tokenValidator),
   validate(articlePostValidators),
-  articleService.create);
+  rescue(articleService.create));
 
-articleRouter.get('/', async (_req, res) => {
-  try {
-    const newPostReturn = await Article
-      .find({ $text: { $search: 'ola' } });
+articleRouter.delete('/:idArticle',
+  // validateAuthorization(tokenValidator),
+  rescue(articleService.delete));
 
-    res.json(newPostReturn);
-  } catch (err) {
-    console.log(`erro Article ${err}`);
-  }
-});
+articleRouter.get('/search',
+  validate(articleSearchValidators),
+  rescue(articleService.search));
 
+articleRouter.get('/:idArticle',
+  rescue(articleService.catch));
+
+// try {
+//   const newPostReturn = await Article
+//     .find({ $text: { $search: 'ola' } });
+
+//   res.json(newPostReturn);
+// } catch (err) {
+//   console.log(`erro Article ${err}`);
+// }
 export default articleRouter;

@@ -26,10 +26,7 @@ class App {
   }
 
   private static database(): void {
-    mongoose.connect(MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    mongoose.connect(MONGODB_URL)
       .then(() => {
         console.log('MongoDB connected');
       })
@@ -44,8 +41,12 @@ class App {
 
   private error(): void {
     // eslint-disable-next-line no-unused-vars
-    const middlewareError: ErrorRequestHandler = (err, _req, res, _next) => {
-      console.error({ err });
+    const middlewareError: ErrorRequestHandler = (err, req, res, _next) => {
+      console.error({
+        err,
+        method: req.method,
+        router: req.originalUrl,
+      });
       res.status(INTERNAL_SERVER_ERROR).json({ errorMessage: 'internal error' });
     };
 

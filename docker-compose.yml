@@ -1,0 +1,11 @@
+version: '3.2'
+services:
+  db:
+    mongo:
+      container_name: mongo-clayton
+      image: mongo
+      restart: always
+      # volumes:
+      #   - ./.data/postgresql:/var/lib/postgresql/data
+      ports:
+        - "27018:27017"

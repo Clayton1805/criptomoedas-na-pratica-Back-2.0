@@ -1,6 +1,8 @@
 import { body } from 'express-validator';
 import { CRIPTO_NAMES } from '../config';
-import { isMatchesHtml, isStringMessage, notEmptyMessage } from '../utils/messagesValidators';
+import {
+  isMatchesHtml, isStringMessage, notEmptyMessage, isNumberNaturalMessage,
+} from '../utils/messagesValidators';
 
 export const articlePostValidators = [
   body('criptoName')
@@ -45,4 +47,32 @@ export const articlePostValidators = [
     .bail()
     .matches(/<\/?[a-z][\s\S]*>/i)
     .withMessage(isMatchesHtml),
+];
+
+export const articleSearchValidators = [
+  body('criptoName')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isString()
+    .withMessage(isStringMessage)
+    .bail()
+    .custom((criptoName) => {
+      if (([...CRIPTO_NAMES, 'all'] as Array<String>).some((coin) => criptoName === coin)) {
+        return Promise.resolve();
+      }
+      return Promise.reject('Essa moeda não é valida.');
+    }),
+  body('text')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isString()
+    .withMessage(isStringMessage),
+  body('page')
+    .notEmpty()
+    .withMessage(notEmptyMessage)
+    .bail()
+    .isInt({ min: 1 })
+    .withMessage(isNumberNaturalMessage),
 ];
